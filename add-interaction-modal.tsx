@@ -1,36 +1,47 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { Dialog, DialogContent } from "@/components/ui/dialog"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Textarea } from "@/components/ui/textarea"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Checkbox } from "@/components/ui/checkbox"
-import { AlertCircle } from "lucide-react"
+import { useState } from "react";
+import { Dialog, DialogContent } from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Checkbox } from "@/components/ui/checkbox";
+import { AlertCircle } from "lucide-react";
 
 interface AddInteractionModalProps {
-  isOpen: boolean
-  onClose: () => void
-  prospect: any
-  onSave: (prospectName: string, interaction: any) => void
+  isOpen: boolean;
+  onClose: () => void;
+  prospect: any;
+  onSave: (prospectName: string, interaction: any) => void;
 }
 
 interface FormErrors {
-  action?: string
-  result?: string
-  channel?: string
-  date?: string
-  time?: string
-  summary?: string
-  nextAction?: string
-  newStatus?: string
-  reason?: string
+  action?: string;
+  result?: string;
+  channel?: string;
+  date?: string;
+  time?: string;
+  summary?: string;
+  nextAction?: string;
+  newStatus?: string;
+  reason?: string;
 }
 
-export function AddInteractionModal({ isOpen, onClose, prospect, onSave }: AddInteractionModalProps) {
-  const [changeStatus, setChangeStatus] = useState(false)
-  const [errors, setErrors] = useState<FormErrors>({})
+export function AddInteractionModal({
+  isOpen,
+  onClose,
+  prospect,
+  onSave,
+}: AddInteractionModalProps) {
+  const [changeStatus, setChangeStatus] = useState(false);
+  const [errors, setErrors] = useState<FormErrors>({});
   const [formData, setFormData] = useState({
     action: "",
     result: "",
@@ -41,43 +52,48 @@ export function AddInteractionModal({ isOpen, onClose, prospect, onSave }: AddIn
     nextAction: "",
     newStatus: "",
     reason: "",
-  })
+  });
 
   const validateForm = (): boolean => {
-    const newErrors: FormErrors = {}
+    const newErrors: FormErrors = {};
 
     // Campos requeridos
-    if (!formData.action) newErrors.action = "La acción realizada es requerida"
-    if (!formData.result) newErrors.result = "El resultado es requerido"
-    if (!formData.channel) newErrors.channel = "El canal de contacto es requerido"
-    if (!formData.date) newErrors.date = "La fecha es requerida"
-    if (!formData.time) newErrors.time = "La hora es requerida"
-    if (!formData.summary.trim()) newErrors.summary = "El resumen de la conversación es requerido"
-    if (!formData.nextAction) newErrors.nextAction = "La próxima acción es requerida"
+    if (!formData.action) newErrors.action = "La acción realizada es requerida";
+    if (!formData.result) newErrors.result = "El resultado es requerido";
+    if (!formData.channel)
+      newErrors.channel = "El canal de contacto es requerido";
+    if (!formData.date) newErrors.date = "La fecha es requerida";
+    if (!formData.time) newErrors.time = "La hora es requerida";
+    if (!formData.summary.trim())
+      newErrors.summary = "El resumen de la conversación es requerido";
+    if (!formData.nextAction)
+      newErrors.nextAction = "La próxima acción es requerida";
 
     // Validaciones condicionales para cambio de estado
     if (changeStatus) {
-      if (!formData.newStatus) newErrors.newStatus = "El nuevo estado es requerido"
-      if (!formData.reason.trim()) newErrors.reason = "El motivo del cambio de estado es requerido"
+      if (!formData.newStatus)
+        newErrors.newStatus = "El nuevo estado es requerido";
+      if (!formData.reason.trim())
+        newErrors.reason = "El motivo del cambio de estado es requerido";
     }
 
     // Validación de fecha (no puede ser futura)
     if (formData.date) {
-      const selectedDate = new Date(formData.date)
-      const today = new Date()
-      today.setHours(23, 59, 59, 999) // Fin del día actual
+      const selectedDate = new Date(formData.date);
+      const today = new Date();
+      today.setHours(23, 59, 59, 999); // Fin del día actual
       if (selectedDate > today) {
-        newErrors.date = "La fecha no puede ser futura"
+        newErrors.date = "La fecha no puede ser futura";
       }
     }
 
-    setErrors(newErrors)
-    return Object.keys(newErrors).length === 0
-  }
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
 
   const handleSave = () => {
     if (!validateForm()) {
-      return
+      return;
     }
 
     // Crear la nueva interacción
@@ -100,17 +116,17 @@ export function AddInteractionModal({ isOpen, onClose, prospect, onSave }: AddIn
           reason: formData.reason,
         },
       }),
-    }
+    };
 
     // Guardar la interacción
-    onSave(prospect.name, newInteraction)
+    onSave(prospect.name, newInteraction);
 
     // Mostrar mensaje de éxito (opcional)
-    console.log("Interacción guardada exitosamente para", prospect.name)
+    console.log("Interacción guardada exitosamente para", prospect.name);
 
     // Resetear el formulario
-    handleCancel()
-  }
+    handleCancel();
+  };
 
   const handleCancel = () => {
     // Resetear el formulario
@@ -124,11 +140,11 @@ export function AddInteractionModal({ isOpen, onClose, prospect, onSave }: AddIn
       nextAction: "",
       newStatus: "",
       reason: "",
-    })
-    setChangeStatus(false)
-    setErrors({})
-    onClose()
-  }
+    });
+    setChangeStatus(false);
+    setErrors({});
+    onClose();
+  };
 
   const getStatusColorClass = (status: string) => {
     const statusConfig: Record<string, string> = {
@@ -137,10 +153,10 @@ export function AddInteractionModal({ isOpen, onClose, prospect, onSave }: AddIn
       Convertido: "#10b981",
       Desestimado: "#ef4444",
       Recontactar: "#f59e0b",
-    }
+    };
 
-    return statusConfig[status] || "#c7c7c7"
-  }
+    return statusConfig[status] || "#c7c7c7";
+  };
 
   const isFormValid = () => {
     return (
@@ -152,18 +168,18 @@ export function AddInteractionModal({ isOpen, onClose, prospect, onSave }: AddIn
       formData.summary.trim() &&
       formData.nextAction &&
       (!changeStatus || (formData.newStatus && formData.reason.trim()))
-    )
-  }
+    );
+  };
 
   const ErrorMessage = ({ error }: { error?: string }) => {
-    if (!error) return null
+    if (!error) return null;
     return (
       <div className="flex items-center gap-1 text-red-500 text-xs mt-1">
         <AlertCircle className="h-3 w-3" />
         <span>{error}</span>
       </div>
-    )
-  }
+    );
+  };
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
@@ -171,9 +187,12 @@ export function AddInteractionModal({ isOpen, onClose, prospect, onSave }: AddIn
         <div className="bg-white">
           {/* Header */}
           <div className="p-6 pb-4 border-b">
-            <h2 className="text-2xl font-bold text-[#000000]">Agregar nueva interacción</h2>
+            <h2 className="text-2xl font-bold text-[#000000]">
+              Agregar nueva interacción
+            </h2>
             <p className="text-gray-500 text-sm mt-1">
-              Registra una nueva interacción para {prospect?.name || "el prospecto"}
+              Registra una nueva interacción para{" "}
+              {prospect?.name || "el prospecto"}
             </p>
           </div>
 
@@ -187,19 +206,28 @@ export function AddInteractionModal({ isOpen, onClose, prospect, onSave }: AddIn
               <Select
                 value={formData.action}
                 onValueChange={(value) => {
-                  setFormData({ ...formData, action: value })
-                  if (errors.action) setErrors({ ...errors, action: undefined })
+                  setFormData({ ...formData, action: value });
+                  if (errors.action)
+                    setErrors({ ...errors, action: undefined });
                 }}
               >
-                <SelectTrigger className={`w-full rounded-lg ${errors.action ? "border-red-500" : ""}`}>
+                <SelectTrigger
+                  className={`w-full rounded-lg ${
+                    errors.action ? "border-red-500" : ""
+                  }`}
+                >
                   <SelectValue placeholder="Seleccionar acción realizada" />
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="Llamada">Llamada</SelectItem>
                   <SelectItem value="Mensaje">Mensaje</SelectItem>
                   <SelectItem value="Recordatorio">Recordatorio</SelectItem>
-                  <SelectItem value="Envio de prueba gratuita">Envío de prueba gratuita</SelectItem>
-                  <SelectItem value="Envio de planes de suscripcion">Envío de planes de suscripción</SelectItem>
+                  <SelectItem value="Envio de prueba gratuita">
+                    Envío de prueba gratuita
+                  </SelectItem>
+                  <SelectItem value="Envio de planes de suscripcion">
+                    Envío de planes de suscripción
+                  </SelectItem>
                 </SelectContent>
               </Select>
               <ErrorMessage error={errors.action} />
@@ -214,11 +242,16 @@ export function AddInteractionModal({ isOpen, onClose, prospect, onSave }: AddIn
                 <Select
                   value={formData.result}
                   onValueChange={(value) => {
-                    setFormData({ ...formData, result: value })
-                    if (errors.result) setErrors({ ...errors, result: undefined })
+                    setFormData({ ...formData, result: value });
+                    if (errors.result)
+                      setErrors({ ...errors, result: undefined });
                   }}
                 >
-                  <SelectTrigger className={`w-full rounded-lg ${errors.result ? "border-red-500" : ""}`}>
+                  <SelectTrigger
+                    className={`w-full rounded-lg ${
+                      errors.result ? "border-red-500" : ""
+                    }`}
+                  >
                     <SelectValue placeholder="Seleccionar resultado" />
                   </SelectTrigger>
                   <SelectContent>
@@ -238,11 +271,16 @@ export function AddInteractionModal({ isOpen, onClose, prospect, onSave }: AddIn
                 <Select
                   value={formData.channel}
                   onValueChange={(value) => {
-                    setFormData({ ...formData, channel: value })
-                    if (errors.channel) setErrors({ ...errors, channel: undefined })
+                    setFormData({ ...formData, channel: value });
+                    if (errors.channel)
+                      setErrors({ ...errors, channel: undefined });
                   }}
                 >
-                  <SelectTrigger className={`w-full rounded-lg ${errors.channel ? "border-red-500" : ""}`}>
+                  <SelectTrigger
+                    className={`w-full rounded-lg ${
+                      errors.channel ? "border-red-500" : ""
+                    }`}
+                  >
                     <SelectValue placeholder="Seleccionar canal" />
                   </SelectTrigger>
                   <SelectContent>
@@ -272,10 +310,13 @@ export function AddInteractionModal({ isOpen, onClose, prospect, onSave }: AddIn
                     type="date"
                     value={formData.date}
                     onChange={(e) => {
-                      setFormData({ ...formData, date: e.target.value })
-                      if (errors.date) setErrors({ ...errors, date: undefined })
+                      setFormData({ ...formData, date: e.target.value });
+                      if (errors.date)
+                        setErrors({ ...errors, date: undefined });
                     }}
-                    className={`w-full rounded-lg ${errors.date ? "border-red-500" : ""}`}
+                    className={`w-full rounded-lg ${
+                      errors.date ? "border-red-500" : ""
+                    }`}
                     placeholder="dd/mm/aaaa"
                     max={new Date().toISOString().split("T")[0]}
                   />
@@ -292,10 +333,13 @@ export function AddInteractionModal({ isOpen, onClose, prospect, onSave }: AddIn
                     type="time"
                     value={formData.time}
                     onChange={(e) => {
-                      setFormData({ ...formData, time: e.target.value })
-                      if (errors.time) setErrors({ ...errors, time: undefined })
+                      setFormData({ ...formData, time: e.target.value });
+                      if (errors.time)
+                        setErrors({ ...errors, time: undefined });
                     }}
-                    className={`w-full rounded-lg ${errors.time ? "border-red-500" : ""}`}
+                    className={`w-full rounded-lg ${
+                      errors.time ? "border-red-500" : ""
+                    }`}
                     placeholder="hh:mm:ss"
                   />
                 </div>
@@ -306,15 +350,19 @@ export function AddInteractionModal({ isOpen, onClose, prospect, onSave }: AddIn
             {/* Resumen de la conversación */}
             <div>
               <label className="block text-sm font-semibold text-[#000000] mb-2">
-                Resumen de la conversación <span className="text-red-500">*</span>
+                Resumen de la conversación{" "}
+                <span className="text-red-500">*</span>
               </label>
               <Textarea
                 value={formData.summary}
                 onChange={(e) => {
-                  setFormData({ ...formData, summary: e.target.value })
-                  if (errors.summary) setErrors({ ...errors, summary: undefined })
+                  setFormData({ ...formData, summary: e.target.value });
+                  if (errors.summary)
+                    setErrors({ ...errors, summary: undefined });
                 }}
-                className={`w-full h-24 rounded-lg resize-none ${errors.summary ? "border-red-500" : ""}`}
+                className={`w-full h-24 rounded-lg resize-none ${
+                  errors.summary ? "border-red-500" : ""
+                }`}
                 placeholder="Describe los detalles de la conversación..."
               />
               <ErrorMessage error={errors.summary} />
@@ -328,19 +376,28 @@ export function AddInteractionModal({ isOpen, onClose, prospect, onSave }: AddIn
               <Select
                 value={formData.nextAction}
                 onValueChange={(value) => {
-                  setFormData({ ...formData, nextAction: value })
-                  if (errors.nextAction) setErrors({ ...errors, nextAction: undefined })
+                  setFormData({ ...formData, nextAction: value });
+                  if (errors.nextAction)
+                    setErrors({ ...errors, nextAction: undefined });
                 }}
               >
-                <SelectTrigger className={`w-full rounded-lg ${errors.nextAction ? "border-red-500" : ""}`}>
+                <SelectTrigger
+                  className={`w-full rounded-lg ${
+                    errors.nextAction ? "border-red-500" : ""
+                  }`}
+                >
                   <SelectValue placeholder="Seleccionar próxima acción" />
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="Llamada">Llamada</SelectItem>
                   <SelectItem value="Mensaje">Mensaje</SelectItem>
                   <SelectItem value="Recordatorio">Recordatorio</SelectItem>
-                  <SelectItem value="Envio de prueba gratuita">Envío de prueba gratuita</SelectItem>
-                  <SelectItem value="Envio de planes de suscripcion">Envío de planes de suscripción</SelectItem>
+                  <SelectItem value="Envio de prueba gratuita">
+                    Envío de prueba gratuita
+                  </SelectItem>
+                  <SelectItem value="Envio de planes de suscripcion">
+                    Envío de planes de suscripción
+                  </SelectItem>
                 </SelectContent>
               </Select>
               <ErrorMessage error={errors.nextAction} />
@@ -352,14 +409,21 @@ export function AddInteractionModal({ isOpen, onClose, prospect, onSave }: AddIn
                 id="change-status"
                 checked={changeStatus}
                 onCheckedChange={(checked) => {
-                  setChangeStatus(checked as boolean)
+                  setChangeStatus(checked as boolean);
                   if (!checked) {
-                    setFormData({ ...formData, newStatus: "", reason: "" })
-                    setErrors({ ...errors, newStatus: undefined, reason: undefined })
+                    setFormData({ ...formData, newStatus: "", reason: "" });
+                    setErrors({
+                      ...errors,
+                      newStatus: undefined,
+                      reason: undefined,
+                    });
                   }
                 }}
               />
-              <label htmlFor="change-status" className="text-sm font-semibold text-[#000000]">
+              <label
+                htmlFor="change-status"
+                className="text-sm font-semibold text-[#000000]"
+              >
                 Cambiar estado del prospecto
               </label>
             </div>
@@ -374,11 +438,16 @@ export function AddInteractionModal({ isOpen, onClose, prospect, onSave }: AddIn
                   <Select
                     value={formData.newStatus}
                     onValueChange={(value) => {
-                      setFormData({ ...formData, newStatus: value })
-                      if (errors.newStatus) setErrors({ ...errors, newStatus: undefined })
+                      setFormData({ ...formData, newStatus: value });
+                      if (errors.newStatus)
+                        setErrors({ ...errors, newStatus: undefined });
                     }}
                   >
-                    <SelectTrigger className={`w-full rounded-lg ${errors.newStatus ? "border-red-500" : ""}`}>
+                    <SelectTrigger
+                      className={`w-full rounded-lg ${
+                        errors.newStatus ? "border-red-500" : ""
+                      }`}
+                    >
                       <SelectValue placeholder="Actualizar estado" />
                     </SelectTrigger>
                     <SelectContent>
@@ -386,7 +455,10 @@ export function AddInteractionModal({ isOpen, onClose, prospect, onSave }: AddIn
                         <div className="flex items-center gap-2">
                           <div
                             className="w-3 h-3 rounded-full"
-                            style={{ backgroundColor: getStatusColorClass("Contactado") }}
+                            style={{
+                              backgroundColor:
+                                getStatusColorClass("Contactado"),
+                            }}
                           ></div>
                           Contactado
                         </div>
@@ -395,7 +467,10 @@ export function AddInteractionModal({ isOpen, onClose, prospect, onSave }: AddIn
                         <div className="flex items-center gap-2">
                           <div
                             className="w-3 h-3 rounded-full"
-                            style={{ backgroundColor: getStatusColorClass("Seguimiento") }}
+                            style={{
+                              backgroundColor:
+                                getStatusColorClass("Seguimiento"),
+                            }}
                           ></div>
                           Seguimiento
                         </div>
@@ -404,7 +479,10 @@ export function AddInteractionModal({ isOpen, onClose, prospect, onSave }: AddIn
                         <div className="flex items-center gap-2">
                           <div
                             className="w-3 h-3 rounded-full"
-                            style={{ backgroundColor: getStatusColorClass("Convertido") }}
+                            style={{
+                              backgroundColor:
+                                getStatusColorClass("Convertido"),
+                            }}
                           ></div>
                           Convertido
                         </div>
@@ -413,7 +491,10 @@ export function AddInteractionModal({ isOpen, onClose, prospect, onSave }: AddIn
                         <div className="flex items-center gap-2">
                           <div
                             className="w-3 h-3 rounded-full"
-                            style={{ backgroundColor: getStatusColorClass("Desestimado") }}
+                            style={{
+                              backgroundColor:
+                                getStatusColorClass("Desestimado"),
+                            }}
                           ></div>
                           Desestimado
                         </div>
@@ -422,7 +503,10 @@ export function AddInteractionModal({ isOpen, onClose, prospect, onSave }: AddIn
                         <div className="flex items-center gap-2">
                           <div
                             className="w-3 h-3 rounded-full"
-                            style={{ backgroundColor: getStatusColorClass("Recontactar") }}
+                            style={{
+                              backgroundColor:
+                                getStatusColorClass("Recontactar"),
+                            }}
                           ></div>
                           Recontactar
                         </div>
@@ -439,10 +523,13 @@ export function AddInteractionModal({ isOpen, onClose, prospect, onSave }: AddIn
                   <Textarea
                     value={formData.reason}
                     onChange={(e) => {
-                      setFormData({ ...formData, reason: e.target.value })
-                      if (errors.reason) setErrors({ ...errors, reason: undefined })
+                      setFormData({ ...formData, reason: e.target.value });
+                      if (errors.reason)
+                        setErrors({ ...errors, reason: undefined });
                     }}
-                    className={`w-full h-20 rounded-lg resize-none ${errors.reason ? "border-red-500" : ""}`}
+                    className={`w-full h-20 rounded-lg resize-none ${
+                      errors.reason ? "border-red-500" : ""
+                    }`}
                     placeholder="Explica el motivo del cambio de estado..."
                   />
                   <ErrorMessage error={errors.reason} />
@@ -465,7 +552,9 @@ export function AddInteractionModal({ isOpen, onClose, prospect, onSave }: AddIn
                 onClick={handleSave}
                 disabled={!isFormValid()}
                 className={`px-8 py-2 rounded-lg text-white ${
-                  isFormValid() ? "hover:opacity-90" : "opacity-50 cursor-not-allowed"
+                  isFormValid()
+                    ? "hover:opacity-90"
+                    : "opacity-50 cursor-not-allowed"
                 }`}
                 style={{ backgroundColor: "#7e78de" }}
               >
@@ -476,5 +565,5 @@ export function AddInteractionModal({ isOpen, onClose, prospect, onSave }: AddIn
         </div>
       </DialogContent>
     </Dialog>
-  )
+  );
 }

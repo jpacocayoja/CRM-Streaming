@@ -1,11 +1,25 @@
-"use client"
+"use client";
 
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
-import { Button } from "@/components/ui/button"
-import { Linkedin, Facebook, Instagram, Music, Twitter, Send, MessageCircle, Mail, Phone } from "lucide-react"
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { Button } from "@/components/ui/button";
+import {
+  Linkedin,
+  Facebook,
+  Instagram,
+  Music,
+  Twitter,
+  Send,
+  MessageCircle,
+  Mail,
+  Phone,
+} from "lucide-react";
 
 interface ContactPopoverProps {
-  prospect: any
+  prospect: any;
 }
 
 export function ContactPopover({ prospect }: ContactPopoverProps) {
@@ -64,7 +78,7 @@ export function ContactPopover({ prospect }: ContactPopoverProps) {
       bgColor: "#4CAF50",
       action: () => console.log("Llamar a", prospect),
     },
-  ]
+  ];
 
   return (
     <Popover>
@@ -77,7 +91,10 @@ export function ContactPopover({ prospect }: ContactPopoverProps) {
           Contacto
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-40 p-1 rounded-lg shadow-lg border" align="start">
+      <PopoverContent
+        className="w-40 p-1 rounded-lg shadow-lg border"
+        align="start"
+      >
         <div className="space-y-0.5">
           {contactOptions.map((option, index) => (
             <button
@@ -85,7 +102,9 @@ export function ContactPopover({ prospect }: ContactPopoverProps) {
               onClick={option.action}
               className="w-full flex items-center justify-between p-1.5 hover:bg-gray-50 rounded-md transition-colors text-left"
             >
-              <span className="text-xs font-medium text-gray-900">{option.name}</span>
+              <span className="text-xs font-medium text-gray-900">
+                {option.name}
+              </span>
               <div
                 className="p-1 rounded-md flex items-center justify-center"
                 style={{ backgroundColor: option.bgColor }}
@@ -97,5 +116,5 @@ export function ContactPopover({ prospect }: ContactPopoverProps) {
         </div>
       </PopoverContent>
     </Popover>
-  )
+  );
 }

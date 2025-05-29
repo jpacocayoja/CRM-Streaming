@@ -1,5 +1,5 @@
 "use client";
-
+import { UserIcon, UserNewIcon, UserSearchIcon, MessageIcon } from "@/icons";
 import { useState, useMemo } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -581,7 +581,9 @@ export default function Component() {
     const radius = 20;
     const circumference = 2 * Math.PI * radius;
     const strokeDasharray = Math.round(circumference * 1000) / 1000;
-    const strokeDashoffset = Math.round((circumference - (percentage / 100) * circumference) * 1000) / 1000;
+    const strokeDashoffset =
+      Math.round((circumference - (percentage / 100) * circumference) * 1000) /
+      1000;
 
     return (
       <div className="relative w-16 h-16">
@@ -757,11 +759,8 @@ export default function Component() {
               <CardContent className="p-3">
                 <div className="flex items-center gap-2">
                   <div className="flex-shrink-0">
-                    <div
-                      className="p-2 rounded-lg"
-                      style={{ backgroundColor: "#7e78de" }}
-                    >
-                      <User className="h-4 w-4 text-white" />
+                    <div className="p-2 rounded-lg">
+                      <UserIcon className="h-10 w-10 text-[#7e78de]" />
                     </div>
                   </div>
                   <div className="min-w-0 flex-1">
@@ -782,41 +781,34 @@ export default function Component() {
             {/* Tarjeta de Nuevos modificada con porcentaje */}
             <Card className="bg-white rounded-xl">
               <CardContent className="p-3">
-                <div className="flex items-center gap-2">
+                <div className="flex items-center justify-between gap-4">
+                  {/* CircularProgress (NO tocar) */}
                   <div className="flex-shrink-0">
                     <CircularProgress
                       percentage={stats.nuevoPercent}
                       color="#cd78de"
                     />
                   </div>
-                  <div className="flex-shrink-0">
-                    <div
-                      className="p-2 rounded-lg"
-                      style={{ backgroundColor: "#cd78de" }}
-                    >
-                      <div className="relative">
-                        <User className="h-4 w-4 text-white" />
-                        <div className="absolute -top-1 -right-1 w-3 h-3 bg-white rounded-full flex items-center justify-center">
-                          <span
-                            className="text-xs font-bold"
-                            style={{ color: "#cd78de" }}
-                          >
-                            +
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="min-w-0 flex-1">
+
+                  {/* Info al lado derecho */}
+                  <div className="flex-1">
                     <p className="text-xs text-[#656464] leading-tight">
                       Prospectos
                     </p>
-                    <p className="text-sm font-semibold text-[#000000] leading-tight">
+                    <p className="text-sm font-semibold text-black leading-tight">
                       Nuevos
                     </p>
-                    <p className="text-3xl font-bold text-[#000000] leading-tight text-right">
-                      {stats.nuevo}
-                    </p>
+
+                    <div className="flex items-center gap-2 mt-1">
+                      {/* Ícono + badge */}
+                      <div className="relative w-7 h-8">
+                        <UserNewIcon className="h-8 w-8  text-[#cd78de]" />
+                      </div>
+                      {/* Número */}
+                      <p className="text-3xl font-bold text-black leading-tight">
+                        {stats.nuevo}
+                      </p>
+                    </div>
                   </div>
                 </div>
               </CardContent>
@@ -824,29 +816,35 @@ export default function Component() {
 
             <Card className="bg-white rounded-xl">
               <CardContent className="p-3">
-                <div className="flex items-center gap-2">
+                <div className="flex items-center justify-between gap-4">
+                  {/* CircularProgress (NO tocar) */}
                   <div className="flex-shrink-0">
                     <CircularProgress
                       percentage={stats.contactadoPercent}
                       color="#7e78de"
                     />
                   </div>
-                  <div className="flex-shrink-0">
-                    <div
-                      className="w-3 h-5 rounded-sm"
-                      style={{ backgroundColor: "#7e78de" }}
-                    ></div>
-                  </div>
-                  <div className="min-w-0 flex-1">
+
+                  {/* Info al lado derecho */}
+                  <div className="flex-1">
                     <p className="text-xs text-[#656464] leading-tight">
                       Prospectos
                     </p>
-                    <p className="text-sm font-semibold text-[#000000] leading-tight">
+                    <p className="text-sm font-semibold text-black leading-tight">
                       Contactados
                     </p>
-                    <p className="text-3xl font-bold text-[#000000] leading-tight text-right">
-                      {stats.contactado}
-                    </p>
+
+                    <div className="flex items-center gap-2 mt-1">
+                      {/* Ícono personalizado */}
+                      <div className="relative w-6 h-6">
+                        <MessageIcon className="w-7 h-7 text-[#7e78de]" />
+                      </div>
+
+                      {/* Número */}
+                      <p className="text-3xl font-bold text-black leading-tight">
+                        {stats.contactado}
+                      </p>
+                    </div>
                   </div>
                 </div>
               </CardContent>
@@ -854,31 +852,35 @@ export default function Component() {
 
             <Card className="bg-white rounded-xl">
               <CardContent className="p-3">
-                <div className="flex items-center gap-2">
+                <div className="flex items-center justify-between gap-4">
+                  {/* CircularProgress (NO tocar) */}
                   <div className="flex-shrink-0">
                     <CircularProgress
                       percentage={stats.seguimientoPercent}
                       color="#06b6d4"
                     />
                   </div>
-                  <div className="flex-shrink-0">
-                    <div
-                      className="p-0.5 rounded"
-                      style={{ backgroundColor: "#06b6d4" }}
-                    >
-                      <User className="h-2.5 w-2.5 text-white" />
-                    </div>
-                  </div>
-                  <div className="min-w-0 flex-1">
+
+                  {/* Info */}
+                  <div className="flex-1">
                     <p className="text-xs text-[#656464] leading-tight">
                       Prospectos en
                     </p>
-                    <p className="text-sm font-semibold text-[#000000] leading-tight">
+                    <p className="text-sm font-semibold text-black leading-tight">
                       Seguimiento
                     </p>
-                    <p className="text-3xl font-bold text-[#000000] leading-tight text-right">
-                      {stats.seguimiento}
-                    </p>
+
+                    <div className="flex items-center gap-2 mt-1">
+                      {/* Ícono personalizado */}
+                      <div className="relative w-6 h-6">
+                        <UserSearchIcon className="w-7 h-7 text-[#06b6d4]" />
+                      </div>
+
+                      {/* Número */}
+                      <p className="text-3xl font-bold text-black leading-tight">
+                        {stats.seguimiento}
+                      </p>
+                    </div>
                   </div>
                 </div>
               </CardContent>
@@ -886,35 +888,40 @@ export default function Component() {
 
             <Card className="bg-white rounded-xl">
               <CardContent className="p-3">
-                <div className="flex items-center gap-2">
+                <div className="flex items-center justify-between gap-4">
+                  {/* CircularProgress (NO tocar) */}
                   <div className="flex-shrink-0">
                     <CircularProgress
                       percentage={stats.convertidoPercent}
                       color="#10b981"
                     />
                   </div>
-                  <div className="flex-shrink-0">
-                    <div
-                      className="p-0.5 rounded"
-                      style={{ backgroundColor: "#10b981" }}
-                    >
-                      <CheckCircle className="h-2.5 w-2.5 text-white" />
-                    </div>
-                  </div>
-                  <div className="min-w-0 flex-1">
+
+                  {/* Info */}
+                  <div className="flex-1">
                     <p className="text-xs text-[#656464] leading-tight">
                       Prospectos
                     </p>
-                    <p className="text-sm font-semibold text-[#000000] leading-tight">
+                    <p className="text-sm font-semibold text-black leading-tight">
                       Convertidos
                     </p>
-                    <p className="text-3xl font-bold text-[#000000] leading-tight text-right">
-                      {stats.convertido}
-                    </p>
+
+                    <div className="flex items-center gap-2 mt-1">
+                      {/* Ícono: CheckCircle */}
+                      <div className="relative w-6 h-6">
+                        <CheckCircle className="w-7 h-7 text-[#10b981]" />
+                      </div>
+
+                      {/* Número */}
+                      <p className="text-3xl font-bold text-black leading-tight">
+                        {stats.convertido}
+                      </p>
+                    </div>
                   </div>
                 </div>
               </CardContent>
             </Card>
+
           </div>
         </div>
 
@@ -1163,7 +1170,7 @@ export default function Component() {
                     </div>
                     <div>
                       <p className="text-[#656464] font-medium">Correo</p>
-                      <p className="text-[#000000] text-xs">
+                      <p className="text-[#000000] text-xs break-words max-w-[100px]">
                         {selectedProspect?.email}
                       </p>
                     </div>
@@ -1216,12 +1223,6 @@ export default function Component() {
                   Estado
                 </h3>
                 <div className="flex items-center gap-3">
-                  <div
-                    className="p-2 rounded-lg"
-                    style={{ backgroundColor: "#cd78de" }}
-                  >
-                    <User className="h-4 w-4 text-white" />
-                  </div>
                   {selectedProspect && getStatusBadge(selectedProspect.status)}
                 </div>
               </div>
@@ -1230,8 +1231,11 @@ export default function Component() {
             {/* Contact Channels Footer */}
             <div className="overflow-hidden">
               {/* Purple section */}
-              <div className="p-2" style={{ backgroundColor: "#7e78de" }}>
-                <h3 className="text-lg font-bold text-white text-center">
+              <div
+                className="p-2 flex items-center justify-center"
+                style={{ backgroundColor: "#7e78de" }}
+              >
+                <h3 className="text-lg font-bold text-white">
                   Canales de Contacto
                 </h3>
               </div>
