@@ -39,6 +39,7 @@ import {
   WhatsApp,
   TikTok,
   Twitter,
+  Prospecto,
 } from "@/icons";
 
 import { InteractionModal } from "./interaction-modal";
@@ -698,7 +699,7 @@ export default function Component() {
               } text-white hover:bg-[#7e78de] bg-[#7e78de] rounded-lg h-12 transition-all duration-300`}
               onClick={() => setCurrentView("prospectos")}
             >
-              <User className="h-5 w-5 flex-shrink-0" />
+              <Prospecto className="h-5 w-5 flex-shrink-0" />
               {sidebarOpen && (
                 <span className="ml-3 transition-opacity duration-300">
                   Prospectos

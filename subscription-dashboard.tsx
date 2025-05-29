@@ -21,6 +21,18 @@ import {
   ChevronLeft,
   ChevronRight,
 } from "lucide-react";
+
+import {
+  Linkedin,
+  Facebook,
+  Instagram,
+  Telegram,
+  WhatsApp,
+  TikTok,
+  Twitter,
+  Prospecto,
+} from "@/icons";
+
 import { ContactPopover } from "./contact-popover";
 import { Badge } from "@/components/ui/badge";
 
@@ -356,7 +368,7 @@ export default function SubscriptionDashboard({
               } text-white hover:bg-[#43407c] rounded-lg h-12 transition-all duration-300`}
               onClick={() => onViewChange?.("prospectos")}
             >
-              <User className="h-5 w-5 flex-shrink-0" />
+              <Prospecto className="h-5 w-5 flex-shrink-0" />
               {sidebarOpen && (
                 <span className="ml-3 transition-opacity duration-300">
                   Prospectos

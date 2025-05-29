@@ -122,7 +122,8 @@ export function AddInteractionModal({
     onSave(prospect.name, newInteraction);
 
     // Mostrar mensaje de éxito (opcional)
-    console.log("Interacción guardada exitosamente para", prospect.name);
+    /* console.log("Interacción guardada exitosamente para", prospect.name); */
+    alert("Interacción guardada exitosamente para " + prospect.name);
 
     // Resetear el formulario
     handleCancel();
