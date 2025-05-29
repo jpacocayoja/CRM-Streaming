@@ -342,25 +342,25 @@ export function InteractionModal({
         );
       case "linkedin":
         return (
-          <div className="bg-gradient-to-r from-[#833AB4] via-[#FD1D1D] to-[#FCAF45] p-2 rounded-lg">
+          <div className="bg-[#0A66C2] p-2 rounded-lg">
             <Linkedin className="h-6 w-6 text-white" />
           </div>
         );
       case "tiktok":
         return (
-          <div className="bg-gradient-to-r from-[#833AB4] via-[#FD1D1D] to-[#FCAF45] p-2 rounded-lg">
+          <div className="bg-black p-2 rounded-lg">
             <TikTok className="h-6 w-6 text-white" />
           </div>
         );
       case "twitter":
         return (
-          <div className="bg-gradient-to-r from-[#833AB4] via-[#FD1D1D] to-[#FCAF45] p-2 rounded-lg">
+          <div className="bg-black p-2 rounded-lg">
             <Twitter className="h-6 w-6 text-white" />
           </div>
         );
       case "llamada":
         return (
-          <div className="bg-[#4CAF50] p-2 rounded-lg">
+          <div className="bg-gray-500 p-2 rounded-lg">
             <Send className="h-6 w-6 text-white" />
           </div>
         );
@@ -488,7 +488,7 @@ export function InteractionModal({
                               {interaction.date}
                             </div>
                             <div className="flex items-center">
-                             <div className="bg-white p-1 rounded text-[#7e78de] mr-1">
+                              <div className="bg-white p-1 rounded text-[#7e78de] mr-1">
                                 <Clock className="h-5 w-5" />
                               </div>
                               {interaction.time}

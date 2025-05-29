@@ -30,6 +30,17 @@ import {
   ChevronLeft,
   ChevronRight,
 } from "lucide-react";
+
+import {
+  Linkedin,
+  Facebook,
+  Instagram,
+  Telegram,
+  WhatsApp,
+  TikTok,
+  Twitter,
+} from "@/icons";
+
 import { InteractionModal } from "./interaction-modal";
 import { AddInteractionModal } from "./add-interaction-modal";
 import { ContactPopover } from "./contact-popover";
@@ -1232,7 +1243,7 @@ export default function Component() {
             <div className="overflow-hidden">
               {/* Purple section */}
               <div
-                className="p-2 flex items-center justify-center"
+                className="p-2 flex items-center justify-center w-full"
                 style={{ backgroundColor: "#7e78de" }}
               >
                 <h3 className="text-lg font-bold text-white">
@@ -1241,56 +1252,56 @@ export default function Component() {
               </div>
 
               {/* Dark section with icons */}
-              <div className="bg-[#0f1729] p-6">
+              <div className="bg-[#0f1729] p-6 w-full">
                 <div className="flex justify-center items-center gap-4">
                   <Button
                     size="icon"
                     variant="ghost"
-                    className="hover:bg-gray-700 text-white w-12 h-12 flex items-center justify-center"
+                    className=" text-white w-12 h-12 flex items-center justify-center"
                   >
-                    <User className="h-6 w-6" />
+                    <Linkedin className="h-6 w-6" />
                   </Button>
                   <Button
                     size="icon"
                     variant="ghost"
-                    className="hover:bg-gray-700 text-white w-12 h-12 flex items-center justify-center"
+                    className=" text-white w-12 h-12 flex items-center justify-center"
                   >
-                    <MessageCircle className="h-6 w-6" />
+                    <Facebook className="h-6 w-6" />
                   </Button>
                   <Button
                     size="icon"
                     variant="ghost"
-                    className="hover:bg-gray-700 text-white w-12 h-12 flex items-center justify-center"
+                    className=" text-white w-12 h-12 flex items-center justify-center"
                   >
-                    <Search className="h-6 w-6" />
+                    <Instagram className="h-6 w-6" />
                   </Button>
                   <Button
                     size="icon"
                     variant="ghost"
-                    className="hover:bg-gray-700 text-white w-12 h-12 flex items-center justify-center"
+                    className=" text-white w-12 h-12 flex items-center justify-center"
                   >
-                    <Phone className="h-6 w-6" />
+                    <Telegram className="h-6 w-6" />
                   </Button>
                   <Button
                     size="icon"
                     variant="ghost"
-                    className="hover:bg-gray-700 text-white w-12 h-12 flex items-center justify-center"
+                    className=" text-white w-12 h-12 flex items-center justify-center"
                   >
-                    <X className="h-6 w-6" />
+                    <WhatsApp className="h-6 w-6" />
                   </Button>
                   <Button
                     size="icon"
                     variant="ghost"
-                    className="hover:bg-gray-700 text-white w-12 h-12 flex items-center justify-center"
+                    className=" text-white w-12 h-12 flex items-center justify-center"
                   >
-                    <Send className="h-6 w-6" />
+                    <TikTok className="h-6 w-6" />
                   </Button>
                   <Button
                     size="icon"
                     variant="ghost"
-                    className="hover:bg-gray-700 text-white w-12 h-12 flex items-center justify-center"
+                    className=" text-white w-12 h-12 flex items-center justify-center"
                   >
-                    <MessageCircle className="h-6 w-6" />
+                    <Twitter className="h-6 w-6" />
                   </Button>
                 </div>
               </div>
