@@ -1,13 +1,28 @@
-"use client"
+"use client";
 
-import { useState, useMemo } from "react"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Menu, User, CheckCircle, Search, Clock, Check, ChevronLeft, ChevronRight } from "lucide-react"
-import { ContactPopover } from "./contact-popover"
-import { Badge } from "@/components/ui/badge"
+import { useState, useMemo } from "react";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import {
+  Menu,
+  User,
+  CheckCircle,
+  Search,
+  Clock,
+  Check,
+  ChevronLeft,
+  ChevronRight,
+} from "lucide-react";
+import { ContactPopover } from "./contact-popover";
+import { Badge } from "@/components/ui/badge";
 
 const getStatusBadge = (status: string) => {
   const statusConfig = {
@@ -17,12 +32,13 @@ const getStatusBadge = (status: string) => {
     Convertido: "#10b981",
     Desestimado: "#ef4444",
     Recontactar: "#f59e0b",
-  }
+  };
 
   return (
     <Badge
       style={{
-        backgroundColor: statusConfig[status as keyof typeof statusConfig] || "#c7c7c7",
+        backgroundColor:
+          statusConfig[status as keyof typeof statusConfig] || "#c7c7c7",
         color: "white",
         border: "none",
       }}
@@ -30,62 +46,65 @@ const getStatusBadge = (status: string) => {
     >
       {status}
     </Badge>
-  )
-}
+  );
+};
 
 interface SubscriptionDashboardProps {
-  onViewChange?: (view: string) => void
-  allProspects: any[]
+  onViewChange?: (view: string) => void;
+  allProspects: any[];
 }
 
-export default function SubscriptionDashboard({ onViewChange, allProspects }: SubscriptionDashboardProps) {
-  const [sidebarOpen, setSidebarOpen] = useState(true)
-  const [timeFilter, setTimeFilter] = useState("todo")
-  const [activeTab, setActiveTab] = useState("prueba-gratuita")
-  const [trialFilter, setTrialFilter] = useState("todos")
-  const [subscriptionFilter, setSubscriptionFilter] = useState("todos")
-  const [planFilter, setPlanFilter] = useState("todos")
-  const [nameSort, setNameSort] = useState("a-z")
-  const [searchTerm, setSearchTerm] = useState("")
-  const [currentPage, setCurrentPage] = useState(1)
-  const [itemsPerPage, setItemsPerPage] = useState(10)
+export default function SubscriptionDashboard({
+  onViewChange,
+  allProspects,
+}: SubscriptionDashboardProps) {
+  const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [timeFilter, setTimeFilter] = useState("todo");
+  const [activeTab, setActiveTab] = useState("prueba-gratuita");
+  const [trialFilter, setTrialFilter] = useState("todos");
+  const [subscriptionFilter, setSubscriptionFilter] = useState("todos");
+  const [planFilter, setPlanFilter] = useState("todos");
+  const [nameSort, setNameSort] = useState("a-z");
+  const [searchTerm, setSearchTerm] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(10);
 
   // Helper function to parse date from dd/mm/yyyy format
   const parseDate = (dateStr: string) => {
-    const parts = dateStr.split("/")
+    const parts = dateStr.split("/");
     if (parts.length === 3) {
-      const day = Number.parseInt(parts[0], 10)
-      const month = Number.parseInt(parts[1], 10) - 1 // Month is 0-indexed
-      const year = Number.parseInt(parts[2], 10)
-      return new Date(year, month, day)
+      const day = Number.parseInt(parts[0], 10);
+      const month = Number.parseInt(parts[1], 10) - 1; // Month is 0-indexed
+      const year = Number.parseInt(parts[2], 10);
+      return new Date(year, month, day);
     }
-    return new Date()
-  }
+    return new Date();
+  };
 
   // Helper function to format date to dd/mm/yyyy
   const formatDate = (date: Date) => {
-    const day = date.getDate().toString().padStart(2, "0")
-    const month = (date.getMonth() + 1).toString().padStart(2, "0")
-    const year = date.getFullYear()
-    return `${day}/${month}/${year}`
-  }
+    const day = date.getDate().toString().padStart(2, "0");
+    const month = (date.getMonth() + 1).toString().padStart(2, "0");
+    const year = date.getFullYear();
+    return `${day}/${month}/${year}`;
+  };
 
   // Helper function to add days to a date
   const addDays = (date: Date, days: number) => {
-    const result = new Date(date)
-    result.setDate(result.getDate() + days)
-    return result
-  }
+    const result = new Date(date);
+    result.setDate(result.getDate() + days);
+    return result;
+  };
 
   // Helper function to calculate days remaining
   const calculateDaysRemaining = (endDate: Date) => {
-    const today = new Date()
-    today.setHours(0, 0, 0, 0)
-    endDate.setHours(0, 0, 0, 0)
-    const diffTime = endDate.getTime() - today.getTime()
-    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24))
-    return Math.max(0, diffDays)
-  }
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    endDate.setHours(0, 0, 0, 0);
+    const diffTime = endDate.getTime() - today.getTime();
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    return Math.max(0, diffDays);
+  };
 
   // Filter prospects by status for each section
   const trialsData = useMemo(() => {
@@ -93,16 +112,16 @@ export default function SubscriptionDashboard({ onViewChange, allProspects }: Su
       .filter((prospect) => prospect.status === "Seguimiento")
       .map((prospect) => {
         // Parse the prospect's assigned date
-        const assignedDate = parseDate(prospect.date)
+        const assignedDate = parseDate(prospect.date);
 
         // Start date should be between assigned date and 30 days after
-        const minStartDate = assignedDate
-        const maxStartDate = addDays(assignedDate, 30)
-        const randomDaysAfterAssigned = Math.floor(Math.random() * 31) // 0-30 days
-        const startDate = addDays(assignedDate, randomDaysAfterAssigned)
+        const minStartDate = assignedDate;
+        const maxStartDate = addDays(assignedDate, 30);
+        const randomDaysAfterAssigned = Math.floor(Math.random() * 31); // 0-30 days
+        const startDate = addDays(assignedDate, randomDaysAfterAssigned);
 
         // End date is 7 days after start date (trial period)
-        const endDate = addDays(startDate, 7)
+        const endDate = addDays(startDate, 7);
 
         return {
           name: prospect.name,
@@ -111,9 +130,9 @@ export default function SubscriptionDashboard({ onViewChange, allProspects }: Su
           daysRemaining: calculateDaysRemaining(endDate),
           status: "active",
           prospectStatus: prospect.status,
-        }
-      })
-  }, [allProspects])
+        };
+      });
+  }, [allProspects]);
 
   const subscriptionsData = useMemo(() => {
     const plans = [
@@ -123,25 +142,25 @@ export default function SubscriptionDashboard({ onViewChange, allProspects }: Su
       { name: "Anual Básico", duration: 365 },
       { name: "Anual Estándar", duration: 365 },
       { name: "Anual Premium", duration: 365 },
-    ]
+    ];
 
     return allProspects
       .filter((prospect) => prospect.status === "Convertido")
       .map((prospect) => {
         // Parse the prospect's assigned date
-        const assignedDate = parseDate(prospect.date)
+        const assignedDate = parseDate(prospect.date);
 
         // Start date should be between assigned date and 60 days after (more time for conversion)
-        const minStartDate = assignedDate
-        const maxStartDate = addDays(assignedDate, 60)
-        const randomDaysAfterAssigned = Math.floor(Math.random() * 61) // 0-60 days
-        const startDate = addDays(assignedDate, randomDaysAfterAssigned)
+        const minStartDate = assignedDate;
+        const maxStartDate = addDays(assignedDate, 60);
+        const randomDaysAfterAssigned = Math.floor(Math.random() * 61); // 0-60 days
+        const startDate = addDays(assignedDate, randomDaysAfterAssigned);
 
         // Select random plan
-        const selectedPlan = plans[Math.floor(Math.random() * plans.length)]
+        const selectedPlan = plans[Math.floor(Math.random() * plans.length)];
 
         // End date based on plan duration
-        const endDate = addDays(startDate, selectedPlan.duration)
+        const endDate = addDays(startDate, selectedPlan.duration);
 
         return {
           name: prospect.name,
@@ -151,18 +170,21 @@ export default function SubscriptionDashboard({ onViewChange, allProspects }: Su
           daysRemaining: calculateDaysRemaining(endDate),
           status: "active",
           prospectStatus: prospect.status,
-        }
-      })
-  }, [allProspects])
+        };
+      });
+  }, [allProspects]);
 
-  const currentData = activeTab === "prueba-gratuita" ? trialsData : subscriptionsData
+  const currentData =
+    activeTab === "prueba-gratuita" ? trialsData : subscriptionsData;
 
   const filteredData = useMemo(() => {
-    let filtered = [...currentData]
+    let filtered = [...currentData];
 
     // Filter by search term
     if (searchTerm) {
-      filtered = filtered.filter((item) => item.name.toLowerCase().includes(searchTerm.toLowerCase()))
+      filtered = filtered.filter((item) =>
+        item.name.toLowerCase().includes(searchTerm.toLowerCase())
+      );
     }
 
     if (activeTab === "prueba-gratuita") {
@@ -170,14 +192,16 @@ export default function SubscriptionDashboard({ onViewChange, allProspects }: Su
       if (trialFilter !== "todos") {
         switch (trialFilter) {
           case "activas":
-            filtered = filtered.filter((item) => item.daysRemaining > 0)
-            break
+            filtered = filtered.filter((item) => item.daysRemaining > 0);
+            break;
           case "expiradas":
-            filtered = filtered.filter((item) => item.daysRemaining === 0)
-            break
+            filtered = filtered.filter((item) => item.daysRemaining === 0);
+            break;
           case "por-vencer":
-            filtered = filtered.filter((item) => item.daysRemaining === 1 || item.daysRemaining === 2)
-            break
+            filtered = filtered.filter(
+              (item) => item.daysRemaining === 1 || item.daysRemaining === 2
+            );
+            break;
         }
       }
     } else {
@@ -185,46 +209,71 @@ export default function SubscriptionDashboard({ onViewChange, allProspects }: Su
       if (subscriptionFilter !== "todos") {
         switch (subscriptionFilter) {
           case "activas":
-            filtered = filtered.filter((item) => item.daysRemaining > 0)
-            break
+            filtered = filtered.filter((item) => item.daysRemaining > 0);
+            break;
           case "por-vencer":
-            filtered = filtered.filter((item) => item.daysRemaining <= 30 && item.daysRemaining > 0)
-            break
+            filtered = filtered.filter(
+              (item) => item.daysRemaining <= 30 && item.daysRemaining > 0
+            );
+            break;
           case "vencidas":
-            filtered = filtered.filter((item) => item.daysRemaining <= 0)
-            break
+            filtered = filtered.filter((item) => item.daysRemaining <= 0);
+            break;
         }
       }
 
       // Filter by plan (only for suscritos tab)
       if (planFilter !== "todos") {
         filtered = filtered.filter((item) => {
-          const subscription = item as any
-          return subscription.plan?.toLowerCase().includes(planFilter.toLowerCase())
-        })
+          const subscription = item as any;
+          return subscription.plan
+            ?.toLowerCase()
+            .includes(planFilter.toLowerCase());
+        });
       }
     }
 
     // Sort by name
     if (nameSort === "a-z") {
-      filtered.sort((a, b) => a.name.localeCompare(b.name))
+      filtered.sort((a, b) => a.name.localeCompare(b.name));
     } else if (nameSort === "z-a") {
-      filtered.sort((a, b) => b.name.localeCompare(a.name))
+      filtered.sort((a, b) => b.name.localeCompare(a.name));
     }
 
-    return filtered
-  }, [searchTerm, nameSort, currentData, trialFilter, subscriptionFilter, planFilter, activeTab])
+    return filtered;
+  }, [
+    searchTerm,
+    nameSort,
+    currentData,
+    trialFilter,
+    subscriptionFilter,
+    planFilter,
+    activeTab,
+  ]);
 
-  const CircularProgress = ({ percentage, color }: { percentage: number; color: string }) => {
-    const radius = 20
-    const circumference = 2 * Math.PI * radius
-    const strokeDasharray = circumference
-    const strokeDashoffset = circumference - (percentage / 100) * circumference
+  const CircularProgress = ({
+    percentage,
+    color,
+  }: {
+    percentage: number;
+    color: string;
+  }) => {
+    const radius = 20;
+    const circumference = 2 * Math.PI * radius;
+    const strokeDasharray = circumference;
+    const strokeDashoffset = circumference - (percentage / 100) * circumference;
 
     return (
       <div className="relative w-16 h-16">
         <svg className="w-16 h-16 transform -rotate-90" viewBox="0 0 50 50">
-          <circle cx="25" cy="25" r={radius} stroke="#e5e7eb" strokeWidth="4" fill="none" />
+          <circle
+            cx="25"
+            cy="25"
+            r={radius}
+            stroke="#e5e7eb"
+            strokeWidth="4"
+            fill="none"
+          />
           <circle
             cx="25"
             cy="25"
@@ -243,46 +292,52 @@ export default function SubscriptionDashboard({ onViewChange, allProspects }: Su
           </span>
         </div>
       </div>
-    )
-  }
+    );
+  };
 
   const getStatsData = () => {
     // Calculate stats based on filtered prospect data
-    const totalTrials = trialsData.length
-    const activeTrials = trialsData.filter((trial) => trial.daysRemaining > 0).length
-    const expiringTrials = trialsData.filter((trial) => trial.daysRemaining === 1 || trial.daysRemaining === 2).length
+    const totalTrials = trialsData.length;
+    const activeTrials = trialsData.filter(
+      (trial) => trial.daysRemaining > 0
+    ).length;
+    const expiringTrials = trialsData.filter(
+      (trial) => trial.daysRemaining === 1 || trial.daysRemaining === 2
+    ).length;
 
     return {
       freeTrials: totalTrials,
       trialsInUse: activeTrials,
-      trialsInUsePercent: totalTrials > 0 ? Math.round((activeTrials / totalTrials) * 100) : 0,
+      trialsInUsePercent:
+        totalTrials > 0 ? Math.round((activeTrials / totalTrials) * 100) : 0,
       subscribedClients: subscriptionsData.length,
       subscriptionsExpiring: expiringTrials,
-      subscriptionsExpiringPercent: totalTrials > 0 ? Math.round((expiringTrials / totalTrials) * 100) : 0,
-    }
-  }
+      subscriptionsExpiringPercent:
+        totalTrials > 0 ? Math.round((expiringTrials / totalTrials) * 100) : 0,
+    };
+  };
 
-  const stats = getStatsData()
+  const stats = getStatsData();
 
   // Paginación
-  const indexOfLastItem = currentPage * itemsPerPage
-  const indexOfFirstItem = indexOfLastItem - itemsPerPage
-  const currentItems = filteredData.slice(indexOfFirstItem, indexOfLastItem)
-  const totalPages = Math.ceil(filteredData.length / itemsPerPage)
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = filteredData.slice(indexOfFirstItem, indexOfLastItem);
+  const totalPages = Math.ceil(filteredData.length / itemsPerPage);
 
-  const paginate = (pageNumber: number) => setCurrentPage(pageNumber)
+  const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
   const nextPage = () => {
     if (currentPage < totalPages) {
-      setCurrentPage(currentPage + 1)
+      setCurrentPage(currentPage + 1);
     }
-  }
+  };
 
   const prevPage = () => {
     if (currentPage > 1) {
-      setCurrentPage(currentPage - 1)
+      setCurrentPage(currentPage - 1);
     }
-  }
+  };
 
   return (
     <div className="flex min-h-screen bg-[#ffffff]">
@@ -302,7 +357,11 @@ export default function SubscriptionDashboard({ onViewChange, allProspects }: Su
               onClick={() => onViewChange?.("prospectos")}
             >
               <User className="h-5 w-5 flex-shrink-0" />
-              {sidebarOpen && <span className="ml-3 transition-opacity duration-300">Prospectos</span>}
+              {sidebarOpen && (
+                <span className="ml-3 transition-opacity duration-300">
+                  Prospectos
+                </span>
+              )}
             </Button>
             <Button
               variant="ghost"
@@ -311,7 +370,11 @@ export default function SubscriptionDashboard({ onViewChange, allProspects }: Su
               } text-white hover:bg-[#7e78de] bg-[#7e78de] rounded-lg h-12 transition-all duration-300`}
             >
               <CheckCircle className="h-5 w-5 flex-shrink-0" />
-              {sidebarOpen && <span className="ml-3 transition-opacity duration-300">Suscripción</span>}
+              {sidebarOpen && (
+                <span className="ml-3 transition-opacity duration-300">
+                  Suscripción
+                </span>
+              )}
             </Button>
           </div>
         </div>
@@ -322,10 +385,17 @@ export default function SubscriptionDashboard({ onViewChange, allProspects }: Su
         {/* Header */}
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center gap-4">
-            <Button variant="ghost" size="icon" onClick={() => setSidebarOpen(!sidebarOpen)}>
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => setSidebarOpen(!sidebarOpen)}
+            >
               <Menu className="h-6 w-6" />
             </Button>
-            <h1 className="text-xl lg:text-2xl font-semibold" style={{ color: "#7e78de" }}>
+            <h1
+              className="text-xl lg:text-2xl font-semibold"
+              style={{ color: "#7e78de" }}
+            >
               CRM Suscripciones Streaming
             </h1>
           </div>
@@ -333,7 +403,9 @@ export default function SubscriptionDashboard({ onViewChange, allProspects }: Su
 
         {/* Subscription Header */}
         <div className="flex flex-col lg:flex-row lg:items-center justify-between mb-6 gap-4">
-          <h2 className="text-2xl lg:text-3xl font-bold text-[#000000]">Suscripción</h2>
+          <h2 className="text-2xl lg:text-3xl font-bold text-[#000000]">
+            Suscripción
+          </h2>
         </div>
 
         {/* Stats Cards */}
@@ -343,14 +415,55 @@ export default function SubscriptionDashboard({ onViewChange, allProspects }: Su
               <CardContent className="p-3">
                 <div className="flex items-center gap-2">
                   <div className="flex-shrink-0">
-                    <div className="p-2 rounded-lg" style={{ backgroundColor: "#7e78de" }}>
-                      <Clock className="h-4 w-4 text-white" />
+                    <div className="p-2 rounded-lg">
+                      <Clock className="h-10 w-10 text-[#7e78de]" />
                     </div>
                   </div>
                   <div className="min-w-0 flex-1">
-                    <p className="text-xs text-[#656464] leading-tight">Pruebas</p>
-                    <p className="text-sm font-semibold text-[#000000] leading-tight">Gratuitas</p>
-                    <p className="text-3xl font-bold text-[#000000] leading-tight">{stats.freeTrials}</p>
+                    <p className="text-xs text-[#656464] leading-tight">
+                      Pruebas
+                    </p>
+                    <p className="text-sm font-semibold text-[#000000] leading-tight">
+                      Gratuitas
+                    </p>
+                    <p className="text-3xl font-bold text-[#000000] leading-tight">
+                      {stats.freeTrials}
+                    </p>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card className="bg-white rounded-xl">
+              <CardContent className="p-3">
+                <div className="flex items-center justify-between gap-4">
+                  {/* CircularProgress (NO tocar) */}
+                  <div className="flex-shrink-0">
+                    <CircularProgress
+                      percentage={stats.trialsInUsePercent}
+                      color="#7e78de"
+                    />
+                  </div>
+
+                  {/* Info al lado derecho */}
+                  <div className="flex-1">
+                    <p className="text-xs text-[#656464] leading-tight">
+                      Pruebas gratuitas
+                    </p>
+                    <p className="text-sm font-semibold text-black leading-tight">
+                      En Uso
+                    </p>
+
+                    <div className="flex items-center gap-2 mt-1">
+                      {/* Ícono */}
+                      <div className="relative w-7 h-8">
+                        <Clock className="h-8 w-8 text-[#7e78de]" />
+                      </div>
+                      {/* Número */}
+                      <p className="text-3xl font-bold text-black leading-tight">
+                        {stats.trialsInUse}
+                      </p>
+                    </div>
                   </div>
                 </div>
               </CardContent>
@@ -360,54 +473,55 @@ export default function SubscriptionDashboard({ onViewChange, allProspects }: Su
               <CardContent className="p-3">
                 <div className="flex items-center gap-2">
                   <div className="flex-shrink-0">
-                    <CircularProgress percentage={stats.trialsInUsePercent} color="#7e78de" />
-                  </div>
-                  <div className="flex-shrink-0">
-                    <div className="p-0.5 rounded" style={{ backgroundColor: "#7e78de" }}>
-                      <Clock className="h-2.5 w-2.5 text-white" />
+                    <div className="p-2 rounded-lg">
+                      <CheckCircle className="h-10 w-10 text-[#7e78de]" />
                     </div>
                   </div>
                   <div className="min-w-0 flex-1">
-                    <p className="text-xs text-[#656464] leading-tight">Pruebas gratuitas</p>
-                    <p className="text-sm font-semibold text-[#000000] leading-tight">En Uso</p>
-                    <p className="text-3xl font-bold text-[#000000] leading-tight">{stats.trialsInUse}</p>
+                    <p className="text-xs text-[#656464] leading-tight">
+                      Clientes
+                    </p>
+                    <p className="text-sm font-semibold text-[#000000] leading-tight">
+                      Suscritos
+                    </p>
+                    <p className="text-3xl font-bold text-[#000000] leading-tight">
+                      {stats.subscribedClients}
+                    </p>
                   </div>
                 </div>
               </CardContent>
             </Card>
-
+            
             <Card className="bg-white rounded-xl">
               <CardContent className="p-3">
-                <div className="flex items-center gap-2">
+                <div className="flex items-center justify-between gap-4">
+                  {/* CircularProgress (NO tocar) */}
                   <div className="flex-shrink-0">
-                    <div className="p-2 rounded-lg" style={{ backgroundColor: "#7e78de" }}>
-                      <Check className="h-4 w-4 text-white" />
-                    </div>
+                    <CircularProgress
+                      percentage={stats.subscriptionsExpiringPercent}
+                      color="#7e78de"
+                    />
                   </div>
-                  <div className="min-w-0 flex-1">
-                    <p className="text-xs text-[#656464] leading-tight">Clientes</p>
-                    <p className="text-sm font-semibold text-[#000000] leading-tight">Suscritos</p>
-                    <p className="text-3xl font-bold text-[#000000] leading-tight">{stats.subscribedClients}</p>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
 
-            <Card className="bg-white rounded-xl">
-              <CardContent className="p-3">
-                <div className="flex items-center gap-2">
-                  <div className="flex-shrink-0">
-                    <CircularProgress percentage={stats.subscriptionsExpiringPercent} color="#7e78de" />
-                  </div>
-                  <div className="flex-shrink-0">
-                    <div className="p-0.5 rounded" style={{ backgroundColor: "#7e78de" }}>
-                      <Check className="h-2.5 w-2.5 text-white" />
+                  {/* Info al lado derecho */}
+                  <div className="flex-1">
+                    <p className="text-xs text-[#656464] leading-tight">
+                      Suscripciones
+                    </p>
+                    <p className="text-sm font-semibold text-black leading-tight">
+                      Por vencer
+                    </p>
+
+                    <div className="flex items-center gap-2 mt-1">
+                      {/* Ícono */}
+                      <div className="relative w-7 h-8">
+                        <CheckCircle className="h-8 w-8 text-[#7e78de]" />
+                      </div>
+                      {/* Número */}
+                      <p className="text-3xl font-bold text-black leading-tight">
+                        {stats.subscriptionsExpiring}
+                      </p>
                     </div>
-                  </div>
-                  <div className="min-w-0 flex-1">
-                    <p className="text-xs text-[#656464] leading-tight">Suscripciones</p>
-                    <p className="text-sm font-semibold text-[#000000] leading-tight">Por vencer</p>
-                    <p className="text-3xl font-bold text-[#000000] leading-tight">{stats.subscriptionsExpiring}</p>
                   </div>
                 </div>
               </CardContent>
@@ -420,10 +534,13 @@ export default function SubscriptionDashboard({ onViewChange, allProspects }: Su
           <Button
             onClick={() => setActiveTab("prueba-gratuita")}
             className={`px-8 py-2 rounded-full font-medium ${
-              activeTab === "prueba-gratuita" ? "text-white" : "bg-gray-200 text-gray-600 hover:bg-gray-300"
+              activeTab === "prueba-gratuita"
+                ? "text-white"
+                : "bg-gray-200 text-gray-600 hover:bg-gray-300"
             }`}
             style={{
-              backgroundColor: activeTab === "prueba-gratuita" ? "#7e78de" : undefined,
+              backgroundColor:
+                activeTab === "prueba-gratuita" ? "#7e78de" : undefined,
             }}
           >
             Prueba Gratuita
@@ -431,10 +548,13 @@ export default function SubscriptionDashboard({ onViewChange, allProspects }: Su
           <Button
             onClick={() => setActiveTab("suscritos")}
             className={`px-8 py-2 rounded-full font-medium ${
-              activeTab === "suscritos" ? "text-white" : "bg-gray-200 text-gray-600 hover:bg-gray-300"
+              activeTab === "suscritos"
+                ? "text-white"
+                : "bg-gray-200 text-gray-600 hover:bg-gray-300"
             }`}
             style={{
-              backgroundColor: activeTab === "suscritos" ? "#7e78de" : undefined,
+              backgroundColor:
+                activeTab === "suscritos" ? "#7e78de" : undefined,
             }}
           >
             Suscritos
@@ -469,7 +589,10 @@ export default function SubscriptionDashboard({ onViewChange, allProspects }: Su
             </>
           ) : (
             <>
-              <Select value={subscriptionFilter} onValueChange={setSubscriptionFilter}>
+              <Select
+                value={subscriptionFilter}
+                onValueChange={setSubscriptionFilter}
+              >
                 <SelectTrigger className="w-full lg:w-48 rounded-full">
                   <SelectValue placeholder="Todos las suscripciones" />
                 </SelectTrigger>
@@ -507,10 +630,10 @@ export default function SubscriptionDashboard({ onViewChange, allProspects }: Su
             </>
           )}
 
-          <div className="relative flex-1 min-w-64">
+          <div className="relative w-full lg:w-64 lg:ml-auto">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-[#656464]" />
             <Input
-              placeholder="Buscar prospecto..."
+              placeholder="Buscar por nombre..."
               className="pl-10 rounded-full"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
@@ -526,22 +649,48 @@ export default function SubscriptionDashboard({ onViewChange, allProspects }: Su
                 <tr>
                   {activeTab === "prueba-gratuita" ? (
                     <>
-                      <th className="text-left p-4 font-semibold text-[#000000]">Prospecto</th>
-                      <th className="text-left p-4 font-semibold text-[#000000]">Estado</th>
-                      <th className="text-left p-4 font-semibold text-[#000000]">Inicio</th>
-                      <th className="text-left p-4 font-semibold text-[#000000]">Fin</th>
-                      <th className="text-left p-4 font-semibold text-[#000000]">Días Restantes</th>
-                      <th className="text-left p-4 font-semibold text-[#000000]">Acciones</th>
+                      <th className="text-left p-4 font-semibold text-[#000000]">
+                        Prospecto
+                      </th>
+                      <th className="text-left p-4 font-semibold text-[#000000]">
+                        Estado
+                      </th>
+                      <th className="text-left p-4 font-semibold text-[#000000]">
+                        Inicio
+                      </th>
+                      <th className="text-left p-4 font-semibold text-[#000000]">
+                        Fin
+                      </th>
+                      <th className="text-left p-4 font-semibold text-[#000000]">
+                        Días Restantes
+                      </th>
+                      <th className="text-left p-4 font-semibold text-[#000000]">
+                        Acciones
+                      </th>
                     </>
                   ) : (
                     <>
-                      <th className="text-left p-4 font-semibold text-[#000000]">Cliente</th>
-                      <th className="text-left p-4 font-semibold text-[#000000]">Estado</th>
-                      <th className="text-left p-4 font-semibold text-[#000000]">Plan de Suscripción</th>
-                      <th className="text-left p-4 font-semibold text-[#000000]">Inicio</th>
-                      <th className="text-left p-4 font-semibold text-[#000000]">Fin</th>
-                      <th className="text-left p-4 font-semibold text-[#000000]">Tiempo restante</th>
-                      <th className="text-left p-4 font-semibold text-[#000000]">Acciones</th>
+                      <th className="text-left p-4 font-semibold text-[#000000]">
+                        Cliente
+                      </th>
+                      <th className="text-left p-4 font-semibold text-[#000000]">
+                        Estado
+                      </th>
+                      <th className="text-left p-4 font-semibold text-[#000000]">
+                        Plan de Suscripción
+                      </th>
+                      <th className="text-left p-4 font-semibold text-[#000000]">
+                        Inicio
+                      </th>
+                      <th className="text-left p-4 font-semibold text-[#000000]">
+                        Fin
+                      </th>
+                      <th className="text-left p-4 font-semibold text-[#000000]">
+                        Tiempo restante
+                      </th>
+                      <th className="text-left p-4 font-semibold text-[#000000]">
+                        Acciones
+                      </th>
                     </>
                   )}
                 </tr>
@@ -550,23 +699,30 @@ export default function SubscriptionDashboard({ onViewChange, allProspects }: Su
                 {currentItems.map((item, index) => (
                   <tr key={index} className="border-b hover:bg-gray-50">
                     <td className="p-4">
-                      <span className="text-[#000000] font-medium">{item.name}</span>
+                      <span className="text-[#000000] font-medium">
+                        {item.name}
+                      </span>
                     </td>
-                    <td className="p-4">{getStatusBadge((item as any).prospectStatus)}</td>
+                    <td className="p-4">
+                      {getStatusBadge((item as any).prospectStatus)}
+                    </td>
                     {activeTab === "suscritos" && (
                       <td className="p-4">
-                        <span className="text-[#000000]">{(item as any).plan}</span>
+                        <span className="text-[#000000]">
+                          {(item as any).plan}
+                        </span>
                       </td>
                     )}
                     <td className="p-4 text-[#656464]">{item.startDate}</td>
                     <td className="p-4 text-[#656464]">{item.endDate}</td>
                     <td className="p-4">
                       <div className="flex items-center gap-2">
-                        <div className="p-1 rounded" style={{ backgroundColor: "#7e78de" }}>
-                          <Clock className="h-3 w-3 text-white" />
+                        <div>
+                          <Clock className="h-5 w-5 text-[#7e78de]" />
                         </div>
                         <span className="text-[#000000] font-medium">
-                          {item.daysRemaining} {item.daysRemaining === 1 ? "día" : "días"}
+                          {item.daysRemaining}{" "}
+                          {item.daysRemaining === 1 ? "día" : "días"}
                         </span>
                       </div>
                     </td>
@@ -583,12 +739,16 @@ export default function SubscriptionDashboard({ onViewChange, allProspects }: Su
           <div className="flex items-center justify-between px-4 py-3 border-t bg-gray-50">
             <div className="flex items-center gap-2">
               <span className="text-sm text-gray-700">
-                Mostrando {indexOfFirstItem + 1} a {Math.min(indexOfLastItem, filteredData.length)} de{" "}
+                Mostrando {indexOfFirstItem + 1} a{" "}
+                {Math.min(indexOfLastItem, filteredData.length)} de{" "}
                 {filteredData.length} resultados
               </span>
             </div>
             <div className="flex items-center gap-2">
-              <Select value={itemsPerPage.toString()} onValueChange={(value) => setItemsPerPage(Number(value))}>
+              <Select
+                value={itemsPerPage.toString()}
+                onValueChange={(value) => setItemsPerPage(Number(value))}
+              >
                 <SelectTrigger className="w-20">
                   <SelectValue />
                 </SelectTrigger>
@@ -611,21 +771,25 @@ export default function SubscriptionDashboard({ onViewChange, allProspects }: Su
               </Button>
               <div className="flex gap-1">
                 {Array.from({ length: Math.min(5, totalPages) }, (_, i) => {
-                  const pageNumber = i + 1
+                  const pageNumber = i + 1;
                   return (
                     <Button
                       key={pageNumber}
-                      variant={currentPage === pageNumber ? "default" : "outline"}
+                      variant={
+                        currentPage === pageNumber ? "default" : "outline"
+                      }
                       size="sm"
                       onClick={() => paginate(pageNumber)}
                       style={{
-                        backgroundColor: currentPage === pageNumber ? "#7e78de" : undefined,
-                        borderColor: currentPage === pageNumber ? "#7e78de" : undefined,
+                        backgroundColor:
+                          currentPage === pageNumber ? "#7e78de" : undefined,
+                        borderColor:
+                          currentPage === pageNumber ? "#7e78de" : undefined,
                       }}
                     >
                       {pageNumber}
                     </Button>
-                  )
+                  );
                 })}
               </div>
               <Button
@@ -644,11 +808,14 @@ export default function SubscriptionDashboard({ onViewChange, allProspects }: Su
 
         {filteredData.length === 0 && (
           <div className="text-center py-8 text-[#656464]">
-            No se encontraron {activeTab === "prueba-gratuita" ? "pruebas gratuitas" : "suscripciones"} que coincidan
-            con los filtros aplicados.
+            No se encontraron{" "}
+            {activeTab === "prueba-gratuita"
+              ? "pruebas gratuitas"
+              : "suscripciones"}{" "}
+            que coincidan con los filtros aplicados.
           </div>
         )}
       </div>
     </div>
-  )
+  );
 }

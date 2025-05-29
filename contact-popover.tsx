@@ -10,13 +10,13 @@ import {
   Linkedin,
   Facebook,
   Instagram,
-  Music,
+  Telegram,
+  WhatsApp,
+  TikTok,
   Twitter,
   Send,
-  MessageCircle,
   Mail,
-  Phone,
-} from "lucide-react";
+} from "@/icons";
 
 interface ContactPopoverProps {
   prospect: any;
@@ -27,55 +27,55 @@ export function ContactPopover({ prospect }: ContactPopoverProps) {
     {
       name: "LinkedIn",
       icon: <Linkedin className="h-4 w-4 text-white" />,
-      bgColor: "#0077B5",
+      bgColor: "#7E78DE",
       action: () => console.log("Contactar por LinkedIn", prospect),
     },
-    {
+     {
       name: "Facebook",
       icon: <Facebook className="h-4 w-4 text-white" />,
-      bgColor: "#1877F2",
+      bgColor: "#7E78DE",
       action: () => console.log("Contactar por Facebook", prospect),
     },
     {
       name: "Instagram",
       icon: <Instagram className="h-4 w-4 text-white" />,
-      bgColor: "#E4405F",
+      bgColor: "#7E78DE",
       action: () => console.log("Contactar por Instagram", prospect),
     },
     {
       name: "TikTok",
-      icon: <Music className="h-4 w-4 text-white" />,
-      bgColor: "#000000",
+      icon: <TikTok className="h-4 w-4 text-white" />,
+      bgColor: "#7E78DE",
       action: () => console.log("Contactar por TikTok", prospect),
     },
     {
       name: "Twitter",
       icon: <Twitter className="h-4 w-4 text-white" />,
-      bgColor: "#1DA1F2",
+      bgColor: "#7E78DE",
       action: () => console.log("Contactar por Twitter", prospect),
     },
     {
       name: "Telegram",
-      icon: <Send className="h-4 w-4 text-white" />,
-      bgColor: "#0088cc",
+      icon: <Telegram className="h-4 w-4 text-white" />,
+      bgColor: "#7E78DE",
       action: () => console.log("Contactar por Telegram", prospect),
     },
     {
       name: "WhatsApp",
-      icon: <MessageCircle className="h-4 w-4 text-white" />,
-      bgColor: "#25D366",
+      icon: <WhatsApp className="h-4 w-4 text-white" />,
+      bgColor: "#7E78DE",
       action: () => console.log("Contactar por WhatsApp", prospect),
     },
     {
       name: "E-mail",
       icon: <Mail className="h-4 w-4 text-white" />,
-      bgColor: "#7e78de",
+      bgColor: "#7E78DE",
       action: () => console.log("Contactar por E-mail", prospect),
     },
     {
       name: "Llamar",
-      icon: <Phone className="h-4 w-4 text-white" />,
-      bgColor: "#4CAF50",
+      icon: <Send className="h-4 w-4 text-white" />,
+      bgColor: "#7E78DE",
       action: () => console.log("Llamar a", prospect),
     },
   ];
