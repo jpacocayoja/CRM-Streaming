@@ -18,14 +18,18 @@ import {
 } from "@/components/ui/popover";
 import { Button } from "@/components/ui/button";
 import { format } from "date-fns";
+import { CalendarIcon, Clock, X } from "lucide-react";
 import {
-  CalendarIcon,
+  Linkedin,
   Facebook,
+  Instagram,
+  Telegram,
+  WhatsApp,
+  TikTok,
+  Twitter,
+  Send,
   Mail,
-  Phone,
-  MessageCircle,
-  X,
-} from "lucide-react";
+} from "@/icons";
 import { cn } from "@/lib/utils";
 import { InteractionDetailModal } from "./interaction-detail-modal";
 
@@ -309,13 +313,13 @@ export function InteractionModal({
       case "whatsapp":
         return (
           <div className="bg-[#25D366] p-2 rounded-lg">
-            <MessageCircle className="h-6 w-6 text-white" />
+            <WhatsApp className="h-6 w-6 text-white" />
           </div>
         );
       case "telegram":
         return (
           <div className="bg-[#0088cc] p-2 rounded-lg">
-            <MessageCircle className="h-6 w-6 text-white" />
+            <Telegram className="h-6 w-6 text-white" />
           </div>
         );
       case "facebook":
@@ -333,20 +337,37 @@ export function InteractionModal({
       case "instagram":
         return (
           <div className="bg-gradient-to-r from-[#833AB4] via-[#FD1D1D] to-[#FCAF45] p-2 rounded-lg">
-            <MessageCircle className="h-6 w-6 text-white" />
+            <Instagram className="h-6 w-6 text-white" />
           </div>
         );
-      case "phone":
+      case "linkedin":
+        return (
+          <div className="bg-gradient-to-r from-[#833AB4] via-[#FD1D1D] to-[#FCAF45] p-2 rounded-lg">
+            <Linkedin className="h-6 w-6 text-white" />
+          </div>
+        );
+      case "tiktok":
+        return (
+          <div className="bg-gradient-to-r from-[#833AB4] via-[#FD1D1D] to-[#FCAF45] p-2 rounded-lg">
+            <TikTok className="h-6 w-6 text-white" />
+          </div>
+        );
+      case "twitter":
+        return (
+          <div className="bg-gradient-to-r from-[#833AB4] via-[#FD1D1D] to-[#FCAF45] p-2 rounded-lg">
+            <Twitter className="h-6 w-6 text-white" />
+          </div>
+        );
       case "llamada":
         return (
           <div className="bg-[#4CAF50] p-2 rounded-lg">
-            <Phone className="h-6 w-6 text-white" />
+            <Send className="h-6 w-6 text-white" />
           </div>
         );
       default:
         return (
           <div className="bg-gray-500 p-2 rounded-lg">
-            <MessageCircle className="h-6 w-6 text-white" />
+            <Send className="h-6 w-6 text-white" />
           </div>
         );
     }
@@ -461,14 +482,14 @@ export function InteractionModal({
                           <p className="font-medium">{interaction.type}</p>
                           <div className="flex items-center gap-2 text-gray-500 text-sm">
                             <div className="flex items-center">
-                              <div className="bg-[#7e78de] p-1 rounded text-white mr-1">
-                                <CalendarIcon className="h-3 w-3" />
+                              <div className="bg-white p-1 rounded text-[#7e78de] mr-1">
+                                <CalendarIcon className="h-5 w-5" />
                               </div>
                               {interaction.date}
                             </div>
                             <div className="flex items-center">
-                              <div className="bg-[#7e78de] p-1 rounded text-white mr-1">
-                                <CalendarIcon className="h-3 w-3" />
+                             <div className="bg-white p-1 rounded text-[#7e78de] mr-1">
+                                <Clock className="h-5 w-5" />
                               </div>
                               {interaction.time}
                             </div>
