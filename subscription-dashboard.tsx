@@ -370,7 +370,7 @@ export default function SubscriptionDashboard({
             >
               <Prospecto className="h-5 w-5 flex-shrink-0" />
               {sidebarOpen && (
-                <span className="ml-3 transition-opacity duration-300">
+                <span className="ml-3 transition-opacity duration-300 font-semibold">
                   Prospectos
                 </span>
               )}
@@ -383,7 +383,7 @@ export default function SubscriptionDashboard({
             >
               <CheckCircle className="h-5 w-5 flex-shrink-0" />
               {sidebarOpen && (
-                <span className="ml-3 transition-opacity duration-300">
+                <span className="ml-3 transition-opacity duration-300 font-semibold">
                   Suscripción
                 </span>
               )}
@@ -503,7 +503,7 @@ export default function SubscriptionDashboard({
                 </div>
               </CardContent>
             </Card>
-            
+
             <Card className="bg-white rounded-xl">
               <CardContent className="p-3">
                 <div className="flex items-center justify-between gap-4">

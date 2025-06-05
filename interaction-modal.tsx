@@ -239,7 +239,7 @@ export function InteractionModal({
       const interactionDateFormatted = interaction.date.includes("/")
         ? interaction.date
             .split("/")
-            .map((part) => part.padStart(2, "0"))
+            .map((part: string) => part.padStart(2, "0"))
             .join("/")
         : interaction.date
             .split("-")

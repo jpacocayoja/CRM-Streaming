@@ -701,7 +701,7 @@ export default function Component() {
             >
               <Prospecto className="h-5 w-5 flex-shrink-0" />
               {sidebarOpen && (
-                <span className="ml-3 transition-opacity duration-300">
+                <span className="ml-3 transition-opacity duration-300 font-semibold">
                   Prospectos
                 </span>
               )}
@@ -715,7 +715,7 @@ export default function Component() {
             >
               <CheckCircle className="h-5 w-5 flex-shrink-0" />
               {sidebarOpen && (
-                <span className="ml-3 transition-opacity duration-300">
+                <span className="ml-3 transition-opacity duration-300 font-semibold">
                   Suscripción
                 </span>
               )}
@@ -765,7 +765,7 @@ export default function Component() {
 
         {/* Stats Cards */}
         <div className="rounded-2xl p-3 lg:p-4 mb-6 bg-gradient-to-b from-[#0f1729] to-[#7e78de]">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4 [&>div]:max-w-[220px] [&>div]:w-full">
+          <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-2 [&>div]:max-w-[220px] [&>div]:w-full">
             {/* Nueva tarjeta: Total de Prospectos */}
             <Card className="bg-white rounded-xl">
               <CardContent className="p-3">
@@ -933,7 +933,6 @@ export default function Component() {
                 </div>
               </CardContent>
             </Card>
-
           </div>
         </div>
 
@@ -1131,11 +1130,10 @@ export default function Component() {
 
       {/* Contact Modal */}
       <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
-        {/*<DialogContent className="max-w-md mx-auto p-0 overflow-hidden rounded-2xl">*/}
-        <DialogContent className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 max-w-md w-full p-0 overflow-hidden rounded-2xl bg-white z-50 shadow-lg">
+        <DialogContent className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full p-0 overflow-hidden rounded-2xl bg-white">
           <div className="bg-white">
             {/* Header */}
-            <DialogHeader className="p-6 pb-4">
+            <DialogHeader className="text-2xl font-bold p-6 pb-4">
               <DialogTitle className="text-2xl font-bold text-[#000000]">
                 Perfil
               </DialogTitle>
@@ -1230,11 +1228,9 @@ export default function Component() {
               </div>
 
               {/* Status Section */}
-              <div className="mb-6">
-                <h3 className="text-lg font-bold text-[#000000] mb-4">
-                  Estado
-                </h3>
-                <div className="flex items-center gap-3">
+              <div className="mb-6 flex items-center gap-2">
+                <h3 className="text-lg font-bold text-[#000000]">Estado</h3>
+                <div className="">
                   {selectedProspect && getStatusBadge(selectedProspect.status)}
                 </div>
               </div>
@@ -1244,67 +1240,38 @@ export default function Component() {
             <div className="overflow-hidden">
               {/* Purple section */}
               <div
-                className="p-2 flex items-center justify-center w-full"
+                className="p-2 flex flex-col items-center justify-center w-full"
                 style={{ backgroundColor: "#7e78de" }}
               >
-                <h3 className="text-lg font-bold text-white">
+                <h3 className="text-lg font-bold text-white text-left">
                   Canales de Contacto
                 </h3>
               </div>
 
               {/* Dark section with icons */}
-              <div className="bg-[#0f1729] p-6 w-full">
-                <div className="flex justify-center items-center gap-4">
-                  <Button
-                    size="icon"
-                    variant="ghost"
-                    className=" text-white w-12 h-12 flex items-center justify-center"
-                  >
-                    <Linkedin className="h-6 w-6" />
-                  </Button>
-                  <Button
-                    size="icon"
-                    variant="ghost"
-                    className=" text-white w-12 h-12 flex items-center justify-center"
-                  >
-                    <Facebook className="h-6 w-6" />
-                  </Button>
-                  <Button
-                    size="icon"
-                    variant="ghost"
-                    className=" text-white w-12 h-12 flex items-center justify-center"
-                  >
-                    <Instagram className="h-6 w-6" />
-                  </Button>
-                  <Button
-                    size="icon"
-                    variant="ghost"
-                    className=" text-white w-12 h-12 flex items-center justify-center"
-                  >
-                    <Telegram className="h-6 w-6" />
-                  </Button>
-                  <Button
-                    size="icon"
-                    variant="ghost"
-                    className=" text-white w-12 h-12 flex items-center justify-center"
-                  >
-                    <WhatsApp className="h-6 w-6" />
-                  </Button>
-                  <Button
-                    size="icon"
-                    variant="ghost"
-                    className=" text-white w-12 h-12 flex items-center justify-center"
-                  >
-                    <TikTok className="h-6 w-6" />
-                  </Button>
-                  <Button
-                    size="icon"
-                    variant="ghost"
-                    className=" text-white w-12 h-12 flex items-center justify-center"
-                  >
-                    <Twitter className="h-6 w-6" />
-                  </Button>
-                </div>
+              <div className="bg-[#0f1729] p-6 flex flex-row justify-center items-center gap-4">
+                <a className="w-12 h-12 flex items-center justify-center rounded-sm cursor-pointer group hover:bg-white transition-all duration-300 ease-in-out">
+                  <Linkedin className="h-7 w-7 flex items-center justify-center text-white group-hover:text-black transition-all duration-300 ease-in-out" />
+                </a>
+                <a className="w-12 h-12 flex items-center justify-center rounded-sm cursor-pointer group hover:bg-white transition-all duration-300 ease-in-out">
+                  <Facebook className="h-7 w-7 flex items-center justify-center text-white group-hover:text-black transition-all duration-300 ease-in-out" />
+                </a>
+                <a className="w-12 h-12 flex items-center justify-center rounded-sm cursor-pointer group hover:bg-white transition-all duration-300 ease-in-out">
+                  <Instagram className="h-7 w-7 flex items-center justify-center text-white group-hover:text-black transition-all duration-300 ease-in-out" />
+                </a>
+                <a className="w-12 h-12 flex items-center justify-center rounded-sm cursor-pointer group hover:bg-white transition-all duration-300 ease-in-out">
+                  <Telegram className="h-7 w-7 flex items-center justify-center text-white group-hover:text-black transition-all duration-300 ease-in-out" />
+                </a>
+                <a className="w-12 h-12 flex items-center justify-center rounded-sm cursor-pointer group hover:bg-white transition-all duration-300 ease-in-out">
+                  <WhatsApp className="h-7 w-7 flex items-center justify-center text-white group-hover:text-black transition-all duration-300 ease-in-out" />
+                </a>
+                <a className="w-12 h-12 flex items-center justify-center rounded-sm cursor-pointer group hover:bg-white transition-all duration-300 ease-in-out">
+                  <TikTok className="h-7 w-7 flex items-center justify-center text-white group-hover:text-black transition-all duration-300 ease-in-out" />
+                </a>
+
+                <a className="w-12 h-12 flex items-center justify-center rounded-sm cursor-pointer group hover:bg-white transition-all duration-300 ease-in-out">
+                  <Twitter className="h-7 w-7 flex items-center justify-center text-white group-hover:text-black transition-all duration-300 ease-in-out" />
+                </a>
               </div>
             </div>
           </div>

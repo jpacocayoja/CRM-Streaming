@@ -30,10 +30,10 @@ export function ContactPopover({ prospect }: ContactPopoverProps) {
       bgColor: "white",
       action: () => console.log("Contactar por LinkedIn", prospect),
     },
-     {
+    {
       name: "Facebook",
       icon: <Facebook className="h-5 w-5 text-[#7E78DE]" />,
-       bgColor: "white",
+      bgColor: "white",
       action: () => console.log("Contactar por Facebook", prospect),
     },
     {
@@ -100,9 +100,9 @@ export function ContactPopover({ prospect }: ContactPopoverProps) {
             <button
               key={index}
               onClick={option.action}
-              className="w-full flex items-center justify-between p-1.5 hover:bg-gray-50 rounded-md transition-colors text-left"
+              className="w-full flex items-center justify-between p-1.5  hover:bg-gray-500 rounded-md transition-colors text-left group"
             >
-              <span className="text-xs font-medium text-gray-900">
+              <span className="text-xs font-medium text-gray-900 group-hover:text-white">
                 {option.name}
               </span>
               <div
